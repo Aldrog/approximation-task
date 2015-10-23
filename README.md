@@ -1,2 +1,2 @@
-# approximation-task
-Approximate functions with least squares method and with Legendre polynomials.
+# Task
+Approximate function `f(x) = x cos(x + 3)` with least squares method and with Legendre polynomials.
