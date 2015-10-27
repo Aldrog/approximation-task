@@ -14,7 +14,7 @@ proc eqnodes(N: static[int]): Vector64[N] =
     for i in 0..(N - 1):
         result[i] = aStart + i.float * (aEnd - aStart) / (N - 1)
 
-proc values[N: static[int]](function: (proc(x: float): float), points: Vector64[N]): Vector64[N] =
+proc values[N](function: (proc(x: float): float), points: Vector64[N]): Vector64[N] =
     new result
     for i in 0..(N - 1):
         result[i] = function(points[i])
