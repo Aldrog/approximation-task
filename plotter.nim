@@ -26,11 +26,11 @@ proc setDefaults() =
     scale = width.float / (b - a)
     zoomed = false
 
-proc convertCoords(x, y: float): graphics.TPoint = 
+proc convertCoords(x, y: float): graphics.Point =
     result.x = ((x + xoffset) * scale).int
     result.y = (height - (y + yoffset) * scale).int
 
-proc drawPlot(surf: graphics.PSurface, F: varargs[proc(x: float): float], assignyoffset: bool = false) = 
+proc drawPlot(surf: graphics.PSurface, F: varargs[proc(x: float): float], assignYOffset: bool = false) =
     var points: seq[float]
     points.newSeq(pointsForPlotting)
     for i in 0..pointsForPlotting-1:
@@ -42,7 +42,7 @@ proc drawPlot(surf: graphics.PSurface, F: varargs[proc(x: float): float], assign
         for j in 0..pointsForPlotting-1:
             fvalues[i][j] = F[i](points[j])
     
-    if assignyoffset: 
+    if assignYOffset:
         yoffset = -min(fvalues[0]) + 0.5
     
     surf.fillSurface(colWhite)
@@ -59,7 +59,7 @@ proc drawPlot(surf: graphics.PSurface, F: varargs[proc(x: float): float], assign
     
     sdl.updateRect(surf.s, 0, 0, width, height)
 
-proc showGraph*(F: varargs[proc(x: float): float]) = 
+proc showPlot*(F: varargs[proc(x: float): float]) =
     setDefaults()
     
     var surf = newScreenSurface(width, height)
@@ -103,7 +103,7 @@ proc showGraph*(F: varargs[proc(x: float): float]) =
                     b = 1.0
                     xoffset = -a
                     scale = width.float / (b - a)
-                surf.drawPlot(F)
+                surf.drawPlot(F, true)
             prevX = -1
             prevY = -1
         of sdl.MOUSEMOTION:

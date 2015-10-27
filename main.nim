@@ -28,5 +28,5 @@ let
     approx: (proc(x: float): float) = leastSquares(x, y)
     source: (proc(x: float): float) = f
 
-showGraph(@[source, approx])
+showPlot(@[source, approx])
 
