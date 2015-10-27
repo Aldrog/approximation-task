@@ -25,11 +25,13 @@ proc solveWithGauss[M, N](A: Matrix64[M, N], b: Vector64[M]): Vector64[N] =
 
 proc leastSquares*[N](x: Vector64[N], y: Vector64[N]): (proc(x: float): float) =
     let 
+        # basis of approximation space
         phi =  [(proc(x: float): float = pow(x, 3.0)),
                 (proc(x: float): float = pow(x, 2.0)),
                 (proc(x: float): float = pow(x, 1.0))]
 
         Q = makeMatrix(N, len(phi), proc(i, j: int): float = phi[j](x[i]))
+        # a (vector of coefficients) should satisfy Q.t*Q*a = Q.t*y
         a = solveWithGauss(Q.t * Q, Q.t * y)
 
     return proc(x: float): float =

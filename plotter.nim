@@ -6,6 +6,7 @@ const
     height = 800
     
     zoom = 5
+    maxZoomDepth = 2
     lineColors = [ colRed, colGreen, colBlue ]
 var 
     # Plotting parameters
@@ -15,7 +16,7 @@ var
     yoffset: float
     pointsForPlotting: int
     scale: float
-    zoomed: bool
+    zoomDepth: int
 
 proc setDefaults() =
     a = -1.0
@@ -24,7 +25,7 @@ proc setDefaults() =
     yoffset = -1.0
     pointsForPlotting = 600
     scale = width.float / (b - a)
-    zoomed = false
+    zoomDepth = 0
 
 proc convertCoords(x, y: float): graphics.Point =
     result.x = ((x + xoffset) * scale).int
@@ -43,7 +44,7 @@ proc drawPlot(surf: graphics.PSurface, F: varargs[proc(x: float): float], assign
             fvalues[i][j] = F[i](points[j])
     
     if assignYOffset:
-        yoffset = -min(fvalues[0]) + 0.5
+        yoffset = (((b - a)*height.float/width.float) - (max(fvalues[0]) + min(fvalues[0]))) / 2
     
     surf.fillSurface(colWhite)
 
@@ -89,14 +90,17 @@ proc showPlot*(F: varargs[proc(x: float): float]) =
                 y = mbu.y.int
             if startX == x and startY == y:
                 # Click
-                if not zoomed:
-                    zoomed = true
-                    a = ((zoom + 1)*a + (zoom - 1)*b) / (2 * zoom)
-                    b = ((zoom - 1)*a + (zoom + 1)*b) / (2 * zoom)
+                if zoomDepth < maxZoomDepth:
+                    inc(zoomDepth)
+                    let 
+                        newA = ((zoom + 1)*a + (zoom - 1)*b) / (2 * zoom)
+                        newB = ((zoom - 1)*a + (zoom + 1)*b) / (2 * zoom)
+                    a = newA
+                    b = newB
                     xoffset = -a
                     scale = width.float / (b - a)
                 else:
-                    zoomed = false
+                    zoomDepth = 0
                     #a = ((zoom + 1)*a + (-zoom + 1)*b) / 2
                     #b = ((-zoom + 1)*a + (zoom + 1)*b) / 2
                     a = -1.0
