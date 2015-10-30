@@ -38,3 +38,14 @@ proc leastSquares*[N](x: Vector64[N], y: Vector64[N]): (proc(x: float): float) =
         for i in low(phi)..high(phi):
             result += a[i] * phi[i](x)
 
+proc Lp(n: int, x: float): float =
+    for i in 0..n:
+        if i mod 2 == 0:
+            result += binom(n, i).float * 2*i.float * pow(x, (2*i - n).float)
+        else:
+            result -= binom(n, i).float * 2*i.float * pow(x, (2*i - n).float)
+    result *= 1 / (fac(n)*(2^n))
+
+proc legendrePolynomialsApproximation*(f: (proc(x: float): float)): (proc(x:float): float) =
+    return proc(x: float): float = 0
+
