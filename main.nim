@@ -27,7 +27,7 @@ let
 let 
     source: (proc(x: float): float) = f
     leastSquaresApproximation: (proc(x: float): float) = leastSquares(x, y)
-    legendreApproximation: (proc(x: float): float) = legendrePolynomialsApproximation(f)
+    legendreApproximation: (proc(x: float): float) = legendrePolynomialsApproximation(f, aStart, aEnd)
 
 showPlot(source, leastSquaresApproximation, legendreApproximation)
 

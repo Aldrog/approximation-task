@@ -2,8 +2,8 @@ import sdl, graphics, colors
 
 const
     # Window size
-    width = 600
-    height = 800
+    width = 800
+    height = 600
     
     zoom = 5
     maxZoomDepth = 2
@@ -23,7 +23,7 @@ proc setDefaults() =
     b = 1.0
     xoffset = -a
     yoffset = -1.0
-    pointsForPlotting = 600
+    pointsForPlotting = width
     scale = width.float / (b - a)
     zoomDepth = 0
 
@@ -65,6 +65,7 @@ proc showPlot*(F: varargs[proc(x: float): float]) =
     
     var surf = newScreenSurface(width, height)
     surf.drawPlot(F, true)
+    surf.writeToBmp("result.bmp")
     
     var 
         prevX = -1
