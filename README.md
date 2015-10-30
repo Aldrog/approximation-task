@@ -8,3 +8,16 @@ For function `f(x) = x cos(x + 3)` find:
 Red - f(x)  
 Green - approximation with degree 3 polynomial  
 Blue - approximation with Legendre polynomials
+
+#Requirements
+For compiling this you will need the following:
+* Nim compiler version 0.12 or higher
+* linalg module from git HEAD
+```
+nimble install linalg@#HEAD
+```
+* graphics and sdl1 modules for graph plotter
+```
+nimble install graphics sdl1
+```
+* SDL development headers
