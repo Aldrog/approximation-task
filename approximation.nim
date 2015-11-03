@@ -52,7 +52,7 @@ proc leastSquares*[N](x: Vector64[N], y: Vector64[N]): (proc(x: float): float) =
         for i in low(phi)..high(phi):
             result += a[i] * phi[i](x)
 
-# i-th Legendre polynomial
+# n-th Legendre polynomial
 proc Pl(n: int, x: float): float =
     if n == 0:
         return 1
