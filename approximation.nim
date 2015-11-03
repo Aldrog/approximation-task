@@ -70,7 +70,7 @@ proc integral(f: (proc(x: float): float), a, b: float): float =
         xn += (b - a) / n
 
 # on Legendre polynomials in particular
-proc ortogonalPolinomials*(f: (proc(x: float): float), a, b: float): (proc(x:float): float) =
+proc ortogonalPolynomials*(f: (proc(x: float): float), a, b: float): (proc(x:float): float) =
     const degree = 3
     echo "Approximation on Legendre polynomials of degree ", degree
     let c = makeVector(degree + 1, proc(i: int): float64 =
